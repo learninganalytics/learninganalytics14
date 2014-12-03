@@ -10,12 +10,24 @@ entrades=json.load(file)
 li_names=[]
 li_dates_course=[]
 
+#Funcion para hacer el split de los argumentos y sacar el date time
+#primer argumento el fichero, segundo argumento fecha de inicio mooc
+# YYYY-MM-DD y tercer argumento fecha finalización mooc YYYY-MM-DD
+def split_date(s_date):
+	li_s_date = []
+	li_s_date = s_date.split('-')
+
+	year = int (li_s_date[0])
+	month = int (li_s_date[1])
+	day = int (li_s_date[2])
+	date = datetime.date(year,month,day)
+		
+	return date
+
 #Funcion para calcular los dias de duración del curso,
 #almacenamos cada dia en la lista li_dates, luego utilizaremos la lista
 #para compararla con los dias de conexion de los estudiantes
-def calculate_dates_course ():
-	date1 = datetime.date(2014, 8, 25)
-	date2 = datetime.date(2014, 10, 05)
+def calculate_dates_course (date1, date2):
 	day = datetime.timedelta (days=1)
 
 	while date1 <= date2:
@@ -68,7 +80,14 @@ def cdf_user(i):
 	return i
 
 
-calculate_dates_course()
+s1_date=sys.argv[2]
+s2_date=sys.argv[3]
+
+date1=split_date(s1_date)
+date2=split_date(s2_date)
+
+calculate_dates_course(date1, date2)
+
 name_students()
 
 for name in li_names:
